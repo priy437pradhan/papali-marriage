@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Odia Damad Box Checklist</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-app-compat.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-database-compat.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -52,16 +50,11 @@
       cursor: pointer;
       transition: all 0.3s ease;
       background-color: white;
-      position: relative;
     }
     
     .item-box.selected {
       background-color: #a8e6a8;
       border-color: #4CAF50;
-    }
-    
-    .item-box.updating {
-      opacity: 0.7;
     }
     
     .item-name {
@@ -131,70 +124,16 @@
       margin-bottom: 20px;
       display: inline-block;
     }
-    
-    .status-indicator {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      padding: 8px 15px;
-      background-color: #333;
-      color: white;
-      border-radius: 20px;
-      font-size: 14px;
-      opacity: 0.8;
-    }
-    
-    .user-count {
-      font-weight: bold;
-      margin-left: 5px;
-    }
-    
-    .sync-indicator {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-    
-    .sync-indicator.synced {
-      background-color: #4CAF50;
-    }
-    
-    .sync-indicator.syncing {
-      background-color: #FFC107;
-      animation: blink 1s infinite;
-    }
-    
-    @keyframes blink {
-      0% { opacity: 0.3; }
-      50% { opacity: 1; }
-      100% { opacity: 0.3; }
-    }
-    
-    .error-message {
-      background-color: #ffebee;
-      color: #d32f2f;
-      padding: 15px;
-      border-radius: 5px;
-      margin-bottom: 20px;
-      display: none;
-    }
   </style>
 </head>
 <body>
   <h1>Odia Damad Box Checklist</h1>
   
-  <div id="error-message" class="error-message">
-    Error connecting to the database. Please check your connection and reload the page.
-  </div>
-  
   <div id="setup-container" class="setup-container">
-    <h3>Enter Your Checklist ID for Collaboration</h3>
-    <p>Enter a unique identifier. Anyone with this same ID will be able to collaborate on this checklist in real-time.</p>
-    <input type="text" id="identifier-input" placeholder="Enter a unique name (e.g., anu-wedding-2025)">
-    <button class="setup-button" id="setup-button">Join Checklist</button>
+    <h3>Set Unique Identifier for This Checklist</h3>
+    <p>To use multiple checklists across different locations, each needs a unique identifier.</p>
+    <input type="text" id="identifier-input" placeholder="Enter a unique name (e.g., family-name-2025)">
+    <button class="setup-button" id="setup-button">Set Identifier</button>
   </div>
   
   <div id="checklist-container" style="display: none;">
@@ -206,32 +145,26 @@
         <div class="item-box" data-id="shirt-piece">
           <div class="item-name">Shirt Piece</div>
           <div class="item-description">Fabric for custom tailoring</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="pant-piece">
           <div class="item-name">Pant Piece</div>
           <div class="item-description">Fabric for custom tailoring</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="kurta-pajama">
           <div class="item-name">Kurta Pajama</div>
           <div class="item-description">Traditional Indian attire</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="sherwani">
           <div class="item-name">Sherwani Set</div>
           <div class="item-description">Formal wedding attire</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="dhoti">
           <div class="item-name">Dhoti</div>
           <div class="item-description">Traditional lower garment</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="towel">
           <div class="item-name">Towel/Gamuchha</div>
           <div class="item-description">Traditional cotton towel</div>
-          <div class="sync-indicator"></div>
         </div>
       </div>
     </div>
@@ -242,32 +175,26 @@
         <div class="item-box" data-id="watch">
           <div class="item-name">Watch</div>
           <div class="item-description">Branded wristwatch</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="shoes">
           <div class="item-name">Formal Shoes</div>
           <div class="item-description">To complement the attire</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="wallet">
           <div class="item-name">Wallet</div>
           <div class="item-description">Leather wallet</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="belt">
           <div class="item-name">Belt</div>
           <div class="item-description">Formal leather belt</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="pagdi">
           <div class="item-name">Pagdi/Turban</div>
           <div class="item-description">Traditional headgear</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="cufflinks">
           <div class="item-name">Cufflinks</div>
           <div class="item-description">Formal shirt accessory</div>
-          <div class="sync-indicator"></div>
         </div>
       </div>
     </div>
@@ -278,32 +205,26 @@
         <div class="item-box" data-id="fruits">
           <div class="item-name">Fresh Fruits</div>
           <div class="item-description">Assorted seasonal fruits</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="dry-fruits">
           <div class="item-name">Dry Fruits</div>
           <div class="item-description">Nuts and dry fruits assortment</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="sweets">
           <div class="item-name">Traditional Sweets</div>
           <div class="item-description">Rasagulla, Chhena Poda, etc.</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="coconut">
           <div class="item-name">Coconut</div>
           <div class="item-description">Auspicious offering</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="betel-nuts">
           <div class="item-name">Betel Nuts & Leaves</div>
           <div class="item-description">Traditional offering</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="turmeric">
           <div class="item-name">Turmeric</div>
           <div class="item-description">For rituals</div>
-          <div class="sync-indicator"></div>
         </div>
       </div>
     </div>
@@ -314,44 +235,34 @@
         <div class="item-box" data-id="perfume">
           <div class="item-name">Perfume/Cologne</div>
           <div class="item-description">Branded fragrance</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="grooming-kit">
           <div class="item-name">Grooming Kit</div>
           <div class="item-description">Personal care essentials</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="jewelry">
           <div class="item-name">Jewelry</div>
           <div class="item-description">Ring or other accessory</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="handkerchiefs">
           <div class="item-name">Handkerchiefs</div>
           <div class="item-description">Set of formal handkerchiefs</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="suitcase">
           <div class="item-name">Suitcase</div>
           <div class="item-description">For wedding essentials</div>
-          <div class="sync-indicator"></div>
         </div>
         <div class="item-box" data-id="umbrella">
           <div class="item-name">Umbrella</div>
           <div class="item-description">Traditional gift item</div>
-          <div class="sync-indicator"></div>
         </div>
       </div>
     </div>
     
     <div class="controls">
       <button class="reset-button" id="reset-button">Reset All Items</button>
-      <button class="setup-button" id="change-identifier-button">Change Checklist ID</button>
+      <button class="setup-button" id="change-identifier-button">Change Identifier</button>
     </div>
-  </div>
-  
-  <div id="status-indicator" class="status-indicator" style="display: none;">
-    Active Users: <span id="user-count" class="user-count">1</span>
   </div>
 
   <script>
@@ -363,47 +274,12 @@
       const listIdentifierDisplay = document.getElementById('list-identifier');
       const resetButton = document.getElementById('reset-button');
       const changeIdentifierButton = document.getElementById('change-identifier-button');
-      const statusIndicator = document.getElementById('status-indicator');
-      const userCountDisplay = document.getElementById('user-count');
-      const errorMessage = document.getElementById('error-message');
       
       let currentNamespace = localStorage.getItem('damad-box-namespace');
-      let database;
-      let presenceRef;
-      let itemsRef;
-      let userId;
-      let connectedRef;
       
-      // Initialize Firebase
-      const firebaseConfig = {
-        // NOTE: This is a demo Firebase project config.
-        // For a real application, you would need to create your own Firebase project
-        // and replace these values with your own Firebase configuration.
-        apiKey: "AIzaSyBxL5mRJvtBMRY8uCCCBRKE9Ukt1hR3MhQ",
-        authDomain: "checklist-demo-12345.firebaseapp.com",
-        databaseURL: "https://checklist-demo-12345.firebaseio.com",
-        projectId: "checklist-demo-12345",
-        storageBucket: "checklist-demo-12345.appspot.com",
-        messagingSenderId: "123456789012",
-        appId: "1:123456789012:web:a1b2c3d4e5f6a7b8c9d0e1"
-      };
-      
-      try {
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        database = firebase.database();
-        
-        // Generate a random user ID for presence system
-        userId = 'user-' + Math.floor(Math.random() * 1000000000);
-        
-        // Check if we already have a namespace set
-        if (currentNamespace) {
-          identifierInput.value = currentNamespace;
-          setupButton.click(); // Auto-join the last used checklist
-        }
-      } catch (error) {
-        console.error("Firebase initialization error:", error);
-        errorMessage.style.display = "block";
+      // Check if we already have a namespace set
+      if (currentNamespace) {
+        showChecklist(currentNamespace);
       }
       
       // Setup button event handler
@@ -411,7 +287,7 @@
         const namespace = identifierInput.value.trim();
         if (namespace) {
           localStorage.setItem('damad-box-namespace', namespace);
-          setupRealTimeDatabase(namespace);
+          showChecklist(namespace);
         } else {
           alert('Please enter a valid identifier');
         }
@@ -419,96 +295,29 @@
       
       // Change identifier button event handler
       changeIdentifierButton.addEventListener('click', function() {
-        // Clean up Firebase listeners before changing
-        cleanupFirebaseListeners();
-        
         setupContainer.style.display = 'block';
         checklistContainer.style.display = 'none';
-        statusIndicator.style.display = 'none';
+        identifierInput.value = currentNamespace || '';
       });
-      
-      // Setup Firebase real-time database
-      function setupRealTimeDatabase(namespace) {
-        try {
-          currentNamespace = namespace;
-          
-          // Setup references
-          itemsRef = database.ref('checklists/' + namespace + '/items');
-          presenceRef = database.ref('checklists/' + namespace + '/presence');
-          connectedRef = database.ref('.info/connected');
-          
-          // Listen for item changes
-          itemsRef.on('value', function(snapshot) {
-            const items = snapshot.val() || {};
-            updateItemsUI(items);
-          }, function(error) {
-            console.error("Firebase items read error:", error);
-            errorMessage.style.display = "block";
-          });
-          
-          // Track presence
-          connectedRef.on('value', function(snap) {
-            if (snap.val() === true) {
-              // User is connected
-              const userRef = presenceRef.child(userId);
-              
-              // Add this user to presence list when connected
-              userRef.set(true);
-              
-              // Remove from presence list when disconnected
-              userRef.onDisconnect().remove();
-              
-              // Update UI
-              showChecklist(namespace);
-            }
-          });
-          
-          // Listen for presence changes
-          presenceRef.on('value', function(snapshot) {
-            const count = snapshot.numChildren();
-            userCountDisplay.textContent = count;
-            statusIndicator.style.display = 'block';
-          });
-          
-        } catch (error) {
-          console.error("Firebase setup error:", error);
-          errorMessage.style.display = "block";
-        }
-      }
-      
-      // Clean up Firebase listeners
-      function cleanupFirebaseListeners() {
-        if (itemsRef) {
-          itemsRef.off();
-        }
-        if (presenceRef) {
-          presenceRef.off();
-          if (userId) {
-            presenceRef.child(userId).remove();
-          }
-        }
-        if (connectedRef) {
-          connectedRef.off();
-        }
-      }
       
       // Function to show the checklist with the given namespace
       function showChecklist(namespace) {
+        currentNamespace = namespace;
         setupContainer.style.display = 'none';
         checklistContainer.style.display = 'block';
         listIdentifierDisplay.textContent = `Checklist ID: ${namespace}`;
         
-        setupItemInteractions();
+        loadItemStates(namespace);
       }
       
-      // Function to update UI based on Firebase data
-      function updateItemsUI(items) {
+      // Function to load item states based on namespace
+      function loadItemStates(namespace) {
         const itemBoxes = document.querySelectorAll('.item-box');
         
         itemBoxes.forEach(box => {
           const itemId = box.getAttribute('data-id');
-          const isSelected = items[itemId] === true;
-          const syncIndicator = box.querySelector('.sync-indicator');
+          const storageKey = `${namespace}-${itemId}`;
+          const isSelected = localStorage.getItem(storageKey) === 'true';
           
           if (isSelected) {
             box.classList.add('selected');
@@ -516,65 +325,26 @@
             box.classList.remove('selected');
           }
           
-          syncIndicator.classList.remove('syncing');
-          syncIndicator.classList.add('synced');
-        });
-      }
-      
-      // Setup item interactions
-      function setupItemInteractions() {
-        const itemBoxes = document.querySelectorAll('.item-box');
-        
-        itemBoxes.forEach(box => {
-          const itemId = box.getAttribute('data-id');
-          const syncIndicator = box.querySelector('.sync-indicator');
-          
           // Add click handlers
           box.onclick = function() {
-            try {
-              // Visual feedback that we're updating
-              syncIndicator.classList.remove('synced');
-              syncIndicator.classList.add('syncing');
-              box.classList.add('updating');
-              
-              // Toggle in Firebase
-              const isCurrentlySelected = box.classList.contains('selected');
-              itemsRef.child(itemId).set(!isCurrentlySelected)
-                .then(() => {
-                  box.classList.remove('updating');
-                })
-                .catch(error => {
-                  console.error("Error updating item:", error);
-                  box.classList.remove('updating');
-                  alert("Failed to update item. Please check your connection.");
-                });
-            } catch (error) {
-              console.error("Item click error:", error);
-              box.classList.remove('updating');
-              syncIndicator.classList.remove('syncing');
-            }
+            this.classList.toggle('selected');
+            const isNowSelected = this.classList.contains('selected');
+            localStorage.setItem(storageKey, isNowSelected);
           };
         });
       }
       
       // Reset button handler
       resetButton.addEventListener('click', function() {
-        if (confirm('Are you sure you want to reset all selections? This will affect all users.')) {
-          try {
-            itemsRef.set({})
-              .catch(error => {
-                console.error("Reset error:", error);
-                alert("Failed to reset items. Please check your connection.");
-              });
-          } catch (error) {
-            console.error("Reset click error:", error);
-          }
+        if (confirm('Are you sure you want to reset all selections?')) {
+          const itemBoxes = document.querySelectorAll('.item-box');
+          itemBoxes.forEach(box => {
+            const itemId = box.getAttribute('data-id');
+            const storageKey = `${currentNamespace}-${itemId}`;
+            box.classList.remove('selected');
+            localStorage.removeItem(storageKey);
+          });
         }
-      });
-      
-      // Clean up when page is closed
-      window.addEventListener('beforeunload', function() {
-        cleanupFirebaseListeners();
       });
     });
   </script>
